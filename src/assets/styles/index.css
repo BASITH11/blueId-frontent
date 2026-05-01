@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+@import "tailwindcss";
+
+/* Mantine packages except `@mantine/hooks` require styles imports */
+@import "@mantine/core/styles.css";
+@import "@mantine/notifications/styles.css";
+@import '@mantine/dates/styles.css';
+
+/* helps to hide scroll bar */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
