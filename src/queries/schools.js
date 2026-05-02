@@ -114,16 +114,14 @@ export const useAllocateSchoolFields = () => {
  * ==================== SCHOOL MANAGEMENT ====================
  */
 
-export const useFetchSchools = () => {
+export const useFetchSchools = (options = {}) => {
     return useQuery({
         queryKey: ["schools"],
         queryFn: async () => {
-            // Note: Keep schools/ prefix if they are outside the admin group
-            // If they are ALSO inside admin, change to admin/schools
-            // Based on your earlier paste, the main school CRUD was just 'schools'
             const response = await axios.get(`schools`);
             return response.data || [];
-        }
+        },
+        ...options
     });
 };
 

@@ -59,7 +59,9 @@ import {
 import { useFetchSchools } from "../queries/schools";
 import axios from "axios"; 
 
-const STORAGE_URL = "http://127.0.0.1:8000/storage/";
+import { env } from "../utils/helpers";
+
+const STORAGE_URL = env("API_BASE_URL").replace("/api/", "/storage/");
 
 const generateSessions = () => {
     const sessions = [];
@@ -105,6 +107,7 @@ const ManageStudents = () => {
   const { data: schoolList = [] } = useFetchSchools();
   const { data: studentsData, isLoading: studentsLoading } = useFetchStudents(filters);
   const { data: formConfig, isLoading: configLoading } = useFetchStudentFormFields(form.values.school_id);
+  const { data: filterConfig } = useFetchStudentFormFields(filters.school_id);
   const { data: viewConfig } = useFetchStudentFormFields(selectedStudentForView?.school_id);
   
   const createMutation = useCreateStudent();
@@ -314,15 +317,17 @@ const ManageStudents = () => {
                         clearable
                         disabled={!filters.school_id}
                       />
-                      <Select 
-                        label="Student Session"
-                        placeholder="All Sessions"
-                        data={generateSessions()}
-                        value={filters.session}
-                        onChange={(val) => setFilters({ ...filters, session: val, page: 1 })}
-                        leftSection={<IconCalendarTime size={16} />}
-                        clearable
-                      />
+                      {filterConfig?.fields?.some(f => f.field_name === "session") && (
+                        <Select 
+                          label="Student Session"
+                          placeholder="All Sessions"
+                          data={generateSessions()}
+                          value={filters.session}
+                          onChange={(val) => setFilters({ ...filters, session: val, page: 1 })}
+                          leftSection={<IconCalendarTime size={16} />}
+                          clearable
+                        />
+                      )}
                   </SimpleGrid>
 
                   <SimpleGrid cols={{ base: 1, sm: 4 }} spacing="lg">

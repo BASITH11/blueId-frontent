@@ -54,7 +54,7 @@ import {
 import api from "../api";
 
 // Dynamically construct the storage URL from the API base URL
-const STORAGE_URL = `${api.defaults.baseURL}/storage/`;
+const STORAGE_URL = api.defaults.baseURL.replace("/api/", "/storage/");
 
 const generateSessions = () => {
     const sessions = [];

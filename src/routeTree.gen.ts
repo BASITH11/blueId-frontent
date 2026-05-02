@@ -19,6 +19,8 @@ import { Route as ManageRolesRouteImport } from './routes/manage-roles'
 import { Route as ManageBatchesRouteImport } from './routes/manage-batches'
 import { Route as ManageAdminsRouteImport } from './routes/manage-admins'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ImportStudentsRouteImport } from './routes/import-students'
+import { Route as ExportTemplateRouteImport } from './routes/export-template'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -72,6 +74,16 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImportStudentsRoute = ImportStudentsRouteImport.update({
+  id: '/import-students',
+  path: '/import-students',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExportTemplateRoute = ExportTemplateRouteImport.update({
+  id: '/export-template',
+  path: '/export-template',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -86,6 +98,8 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/export-template': typeof ExportTemplateRoute
+  '/import-students': typeof ImportStudentsRoute
   '/login': typeof LoginRoute
   '/manage-admins': typeof ManageAdminsRoute
   '/manage-batches': typeof ManageBatchesRoute
@@ -100,6 +114,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/export-template': typeof ExportTemplateRoute
+  '/import-students': typeof ImportStudentsRoute
   '/login': typeof LoginRoute
   '/manage-admins': typeof ManageAdminsRoute
   '/manage-batches': typeof ManageBatchesRoute
@@ -115,6 +131,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/export-template': typeof ExportTemplateRoute
+  '/import-students': typeof ImportStudentsRoute
   '/login': typeof LoginRoute
   '/manage-admins': typeof ManageAdminsRoute
   '/manage-batches': typeof ManageBatchesRoute
@@ -131,6 +149,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
+    | '/export-template'
+    | '/import-students'
     | '/login'
     | '/manage-admins'
     | '/manage-batches'
@@ -145,6 +165,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/dashboard'
+    | '/export-template'
+    | '/import-students'
     | '/login'
     | '/manage-admins'
     | '/manage-batches'
@@ -159,6 +181,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/dashboard'
+    | '/export-template'
+    | '/import-students'
     | '/login'
     | '/manage-admins'
     | '/manage-batches'
@@ -174,6 +198,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
+  ExportTemplateRoute: typeof ExportTemplateRoute
+  ImportStudentsRoute: typeof ImportStudentsRoute
   LoginRoute: typeof LoginRoute
   ManageAdminsRoute: typeof ManageAdminsRoute
   ManageBatchesRoute: typeof ManageBatchesRoute
@@ -258,6 +284,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/import-students': {
+      id: '/import-students'
+      path: '/import-students'
+      fullPath: '/import-students'
+      preLoaderRoute: typeof ImportStudentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/export-template': {
+      id: '/export-template'
+      path: '/export-template'
+      fullPath: '/export-template'
+      preLoaderRoute: typeof ExportTemplateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -278,6 +318,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
+  ExportTemplateRoute: ExportTemplateRoute,
+  ImportStudentsRoute: ImportStudentsRoute,
   LoginRoute: LoginRoute,
   ManageAdminsRoute: ManageAdminsRoute,
   ManageBatchesRoute: ManageBatchesRoute,

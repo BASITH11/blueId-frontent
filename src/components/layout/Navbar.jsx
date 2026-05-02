@@ -15,7 +15,9 @@ import {
     IconLogout,
     IconBuildingStore,
     IconSettings,
-    IconSchool
+    IconSchool,
+    IconFileExport,
+    IconFileUpload
 } from "@tabler/icons-react";
 import { useLogout } from "../../queries/auth";
 import { useRouterState, Link } from "@tanstack/react-router";
@@ -37,6 +39,8 @@ export default function Sidebar({ toggle }) {
         { label: "Dashboard", to: "/dashboard", icon: IconHome2 },
         { label: "Manage Admins", to: "/manage-admins", icon: IconShieldLock, superAdminOnly: true },
         { label: "Manage Students", to: "/manage-students", icon: IconUsers },
+        { label: "Export Template", to: "/export-template", icon: IconFileExport },
+        { label: "Import Students", to: "/import-students", icon: IconFileUpload },
         { label: "Register Admin", to: "/register-admin", icon: IconUserPlus, superAdminOnly: true },
         { label: "Manage Roles", to: "/manage-roles", icon: IconShieldLock, superAdminOnly: true },
         { label: "Manage Batches", to: "/manage-batches", icon: IconFolders, superAdminOnly: true },

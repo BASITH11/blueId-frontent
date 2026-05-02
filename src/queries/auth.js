@@ -5,12 +5,12 @@ import { validateUser, invalidateGuard } from "@utils/authGuard";
 import { notify } from "@utils/helpers";
 import { Navigate } from "@tanstack/react-router";
 
-export const useLogin = (email, password) => {
+export const useLogin = (username, password) => {
     return useMutation({
 
         mutationFn: async () =>
             await axios.post("login", {
-                email: email,
+                email: username,
                 password: password,
             }),
         onSuccess: (data) => {

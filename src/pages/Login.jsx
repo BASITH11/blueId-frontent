@@ -31,12 +31,12 @@ const Login = (props) => {
     const form = useForm({
         mode: "uncontrolled",
         initialValues: {
-            email: "",
+            username: "",
             password: "",
         },
     });
 
-    const loginResponse = useLogin(form.values.email, form.values.password);
+    const loginResponse = useLogin(form.values.username, form.values.password);
     const handleLogin = () => loginResponse.mutate();
     
 
@@ -53,21 +53,18 @@ const Login = (props) => {
                 <Stack gap={30}>
                     <TextInput
                         required
-                        label="Email"
-                        placeholder="Enter your Email"
-                        value={form.values.email}
+                        label="Email or Mobile Number"
+                        placeholder="Enter your Email or Mobile Number"
+                        value={form.values.username}
                         onChange={(event) =>
                             form.setFieldValue(
-                                "email",
+                                "username",
                                 event.currentTarget.value
                             )
                         }
-                        error={form.errors.email}
+                        error={form.errors.username}
                         radius={0}
                         size="md"
-                        className={{
-
-                        }}
                     />
 
                     <PasswordInput

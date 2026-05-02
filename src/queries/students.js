@@ -82,3 +82,42 @@ export const useDeleteStudent = () => {
         }
     });
 };
+
+export const useImportStudents = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (payload) => {
+            return await axios.post(`import`, payload, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ["students"] });
+            const msg = data.message || "Import process started";
+            notify({ title: "Import Successful", message: msg, iconType: "success" });
+        },
+        onError: (err) => {
+            const message = err.response?.data?.message || "Import failed";
+            notify({ title: "Import Error", message, iconType: "error" });
+        }
+    });
+};
+
+export const useImportPhotos = () => {
+    return useMutation({
+        mutationFn: async (payload) => {
+            return await axios.post(`import-photos`, payload, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
+        },
+        onSuccess: (data) => {
+            const msg = data.message || "Photos upload started";
+            notify({ title: "Photos Uploaded", message: msg, iconType: "success" });
+        },
+        onError: (err) => {
+            const message = err.response?.data?.message || "Photos upload failed";
+            notify({ title: "Upload Error", message, iconType: "error" });
+        }
+    });
+};
+

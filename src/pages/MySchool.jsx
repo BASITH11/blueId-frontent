@@ -41,7 +41,8 @@ import {
 } from "../queries/schoolAdmin";
 import { useAuthStore } from "../config/authStore";
 
-const STORAGE_URL = "http://127.0.0.1:8000/storage/";
+import { env } from "../utils/helpers";
+const STORAGE_URL = env("API_BASE_URL").replace("/api/", "/storage/");
 
 const InfoBlock = ({ label, value }) => (
   <Box>

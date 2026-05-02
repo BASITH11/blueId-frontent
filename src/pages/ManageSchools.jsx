@@ -61,7 +61,8 @@ import { useFetchRoles } from "../queries/roles";
 import { useFetchBatches } from "../queries/batches";
 import { useMantineTheme } from "@mantine/core";
 
-const STORAGE_URL = "http://127.0.0.1:8000/storage/";
+import { env } from "../utils/helpers";
+const STORAGE_URL = env("API_BASE_URL").replace("/api/", "/storage/");
 
 const ManageSchools = () => {
   const theme = useMantineTheme();
