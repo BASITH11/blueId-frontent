@@ -197,9 +197,9 @@ const SchoolAdminManageStudents = () => {
         }
     };
 
-    const THEME_PRIMARY = theme.colors.sage[5];
-    const THEME_LIGHT = theme.colors.sage[2];
-    const THEME_DARK = theme.colors.sage[9];
+    const THEME_PRIMARY = theme.colors.blueId[5];
+    const THEME_LIGHT = theme.colors.blueId[2];
+    const THEME_DARK = theme.colors.blueId[9];
 
     return (
         <Box p="xl">
@@ -286,14 +286,14 @@ const SchoolAdminManageStudents = () => {
                                     <Table.Tr key={student.id}>
                                         <Table.Td>
                                             <Group gap="sm">
-                                                <Avatar src={getImageUrl(student)} radius="xl" size="sm" color="sage">
+                                                <Avatar src={getImageUrl(student)} radius="xl" size="sm" color="blueId">
                                                     {student.student_name.charAt(0)}
                                                 </Avatar>
                                                 <Text size="sm" fw={600} color={THEME_DARK}>{student.student_name}</Text>
                                             </Group>
                                         </Table.Td>
                                         <Table.Td>
-                                            <Badge variant="outline" color="sage" radius="xs" size="sm">
+                                            <Badge variant="outline" color="blueId" radius="xs" size="sm">
                                                 {student.admission_no || "N/A"}
                                             </Badge>
                                         </Table.Td>
@@ -301,12 +301,12 @@ const SchoolAdminManageStudents = () => {
                                             <Text size="sm" color={THEME_DARK}>{student.batch?.name || "Unassigned"}</Text>
                                         </Table.Td>
                                         <Table.Td>
-                                            <Badge variant="light" color="sage" size="sm">{student.session || "—"}</Badge>
+                                            <Badge variant="light" color="blueId" size="sm">{student.session || "—"}</Badge>
                                         </Table.Td>
                                         <Table.Td align="right">
                                             <Menu shadow="md" width={180} radius="md">
                                                 <Menu.Target>
-                                                    <ActionIcon variant="subtle" color="sage">
+                                                    <ActionIcon variant="subtle" color="blueId">
                                                         <IconDots size={18} />
                                                     </ActionIcon>
                                                 </Menu.Target>
@@ -338,7 +338,7 @@ const SchoolAdminManageStudents = () => {
                     total={totalPages} 
                     value={filters.page} 
                     onChange={(p) => setFilters({ ...filters, page: p })}
-                    color="sage"
+                    color="blueId"
                     radius="md"
                 />
             </Flex>
@@ -375,7 +375,7 @@ const SchoolAdminManageStudents = () => {
                                     } 
                                     size={120} 
                                     radius={120} 
-                                    color="sage"
+                                    color="blueId"
                                 />
                                 <FileInput 
                                     placeholder="Upload Photo" 
@@ -454,10 +454,10 @@ const SchoolAdminManageStudents = () => {
                     <Stack gap="xl">
                         <Center py="md">
                             <Stack align="center" gap="sm">
-                                <Avatar src={getImageUrl(selectedStudentForView)} size={120} radius={120} color="sage" />
+                                <Avatar src={getImageUrl(selectedStudentForView)} size={120} radius={120} color="blueId" />
                                 <Box align="center">
                                     <Text fw={700} size="xl" color={THEME_DARK}>{selectedStudentForView.student_name}</Text>
-                                    <Badge variant="outline" color="sage">{selectedStudentForView.admission_no}</Badge>
+                                    <Badge variant="outline" color="blueId">{selectedStudentForView.admission_no}</Badge>
                                 </Box>
                             </Stack>
                         </Center>
@@ -475,7 +475,7 @@ const SchoolAdminManageStudents = () => {
                         </SimpleGrid>
                         
                         <Divider />
-                        <Button variant="light" color="sage" fullWidth onClick={() => setViewDrawerOpened(false)}>Close View</Button>
+                        <Button variant="light" color="blueId" fullWidth onClick={() => setViewDrawerOpened(false)}>Close View</Button>
                     </Stack>
                 )}
             </Drawer>

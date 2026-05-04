@@ -248,9 +248,9 @@ const ManageStudents = () => {
     }
   };
 
-  const THEME_PRIMARY = theme.colors.sage[5];
-  const THEME_LIGHT = theme.colors.sage[2];
-  const THEME_DARK = theme.colors.sage[9];
+  const THEME_PRIMARY = theme.colors.blueId[5];
+  const THEME_LIGHT = theme.colors.blueId[2];
+  const THEME_DARK = theme.colors.blueId[9];
 
   return (
     <Box p="xl">
@@ -265,7 +265,7 @@ const ManageStudents = () => {
             <Group>
                 <Button 
                     variant="light"
-                    color="sage"
+                    color="blueId"
                     onClick={() => handleAuthenticatedDownload('csv')}
                     leftSection={<IconFileExport size={18} />}
                     radius="md"
@@ -275,7 +275,7 @@ const ManageStudents = () => {
                 </Button>
                 <Button 
                     variant="light"
-                    color="sage"
+                    color="blueId"
                     onClick={() => handleAuthenticatedDownload('zip')}
                     leftSection={<IconArchive size={18} />}
                     radius="md"
@@ -397,14 +397,14 @@ const ManageStudents = () => {
                               <Table.Tr key={student.id}>
                                   <Table.Td>
                                       <Group gap="sm">
-                                          <Avatar src={student.photo ? `${STORAGE_URL}${student.photo}` : null} radius="xl" size="sm" color="sage">
+                                          <Avatar src={student.photo ? `${STORAGE_URL}${student.photo}` : null} radius="xl" size="sm" color="blueId">
                                               {student.student_name.charAt(0)}
                                           </Avatar>
                                           <Text size="sm" fw={600} color={THEME_DARK}>{student.student_name}</Text>
                                       </Group>
                                   </Table.Td>
                                   <Table.Td>
-                                      <Badge variant="outline" color="sage" radius="xs" size="sm">
+                                      <Badge variant="outline" color="blueId" radius="xs" size="sm">
                                           {student.admission_no || "N/A"}
                                       </Badge>
                                   </Table.Td>
@@ -412,12 +412,12 @@ const ManageStudents = () => {
                                       <Text size="sm" color={THEME_DARK}>{student.school?.school_name}</Text>
                                   </Table.Td>
                                   <Table.Td>
-                                      <Badge variant="light" color="sage" size="sm">{student.batch?.name}</Badge>
+                                      <Badge variant="light" color="blueId" size="sm">{student.batch?.name}</Badge>
                                   </Table.Td>
                                   <Table.Td align="right">
                                     <Menu shadow="md" width={180} radius="md">
                                         <Menu.Target>
-                                            <ActionIcon variant="subtle" color="sage">
+                                            <ActionIcon variant="subtle" color="blueId">
                                                 <IconDots size={18} />
                                             </ActionIcon>
                                         </Menu.Target>
@@ -449,7 +449,7 @@ const ManageStudents = () => {
             total={studentsData?.last_page || 1} 
             value={filters.page} 
             onChange={(p) => setFilters({ ...filters, page: p })}
-            color="sage"
+            color="blueId"
             radius="md"
           />
       </Flex>
@@ -502,7 +502,7 @@ const ManageStudents = () => {
                         } 
                         size={120} 
                         radius={120} 
-                        color="sage"
+                        color="blueId"
                     />
                     <FileInput 
                         placeholder="Enrollment Photo" 
@@ -609,11 +609,11 @@ const ManageStudents = () => {
                             src={selectedStudentForView.photo ? `${STORAGE_URL}${selectedStudentForView.photo}` : null} 
                             size={120} 
                             radius={120} 
-                            color="sage"
+                            color="blueId"
                         />
                         <Box align="center">
                             <Text fw={700} size="xl" color={THEME_DARK}>{selectedStudentForView.student_name}</Text>
-                            <Badge variant="outline" color="sage">{selectedStudentForView.admission_no || "PROVISIONAL"}</Badge>
+                            <Badge variant="outline" color="blueId">{selectedStudentForView.admission_no || "PROVISIONAL"}</Badge>
                         </Box>
                       </Stack>
                   </Center>
@@ -654,7 +654,7 @@ const ManageStudents = () => {
 
                   <Divider my="md" />
                   <Flex justify="flex-end">
-                      <Button variant="light" color="sage" onClick={() => setViewDrawerOpened(false)}>Close Review</Button>
+                      <Button variant="light" color="blueId" onClick={() => setViewDrawerOpened(false)}>Close Review</Button>
                   </Flex>
               </Stack>
           )}

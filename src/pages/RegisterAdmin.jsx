@@ -60,9 +60,9 @@ const RegisterAdmin = () => {
   const assignBatchesMutation = useAssignSchoolBatches();
   const allocateFieldsMutation = useAllocateSchoolFields();
 
-  const THEME_PRIMARY = theme.colors.sage[5];
-  const THEME_LIGHT = theme.colors.sage[2];
-  const THEME_DARK = theme.colors.sage[9];
+  const THEME_PRIMARY = theme.colors.blueId[5];
+  const THEME_LIGHT = theme.colors.blueId[2];
+  const THEME_DARK = theme.colors.blueId[9];
 
   const form = useForm({
     initialValues: {
@@ -175,6 +175,15 @@ const RegisterAdmin = () => {
 
   return (
     <Box p="xl">
+      <Flex align="center" justify="space-between" mb={40}>
+        <Box>
+            <Text style={{ fontSize: "2.4rem", fontWeight: 500, color: THEME_DARK, fontFamily: "Georgia, serif" }}>
+                Onboard Institution
+            </Text>
+            <Text color="dimmed" size="sm">Register new administrative accounts and configure institutional parameters.</Text>
+        </Box>
+      </Flex>
+
       <Stepper 
         active={active} 
         onStepClick={setActive} 
@@ -248,6 +257,7 @@ const RegisterAdmin = () => {
                     type="submit" 
                     radius="xl" 
                     size="md" 
+                    color="white"
                     rightSection={isSchool ? <IconChevronRight size={18} /> : <IconCheck size={18} />}
                     style={{ backgroundColor: THEME_PRIMARY }}
                     loading={registerAdminMutation.isPending || registerSchoolMutation.isPending}
@@ -298,6 +308,7 @@ const RegisterAdmin = () => {
                 <Button variant="subtle" color="gray" leftSection={<IconChevronLeft size={18} />} onClick={() => setActive(0)}>Back</Button>
                 <Button 
                     radius="xl" 
+                    color="white"
                     rightSection={<IconChevronRight size={18} />} 
                     style={{ backgroundColor: THEME_PRIMARY }}
                     onClick={handleBatchAllocation}
@@ -370,6 +381,7 @@ const RegisterAdmin = () => {
                     <Button variant="subtle" color="gray" leftSection={<IconChevronLeft size={18} />} onClick={() => setActive(1)}>Back</Button>
                     <Button 
                         radius="xl" 
+                        color="white"
                         rightSection={<IconCheck size={18} />} 
                         style={{ backgroundColor: THEME_PRIMARY }}
                         onClick={handleFieldAllocation}

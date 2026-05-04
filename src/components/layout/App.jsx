@@ -3,6 +3,7 @@ import { AppShell, Box, Burger, ActionIcon, Group, Text, ThemeIcon, Image } from
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconMenu2, IconSchool } from "@tabler/icons-react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import BlueIDLogo from "../../assets/images/blueIdLogo";
 
 const App = () => {
@@ -21,7 +22,7 @@ const App = () => {
             withBorder={false}
             styles={{
                 main: {
-                    backgroundColor: "#f2f4ec",
+                    backgroundColor: "#f5f8ff",
                     minHeight: "100vh",
                 },
                 navbar: {
@@ -31,23 +32,21 @@ const App = () => {
                 },
                 header: {
                     backgroundColor: "#ffffff",
-                    borderBottom: "1px solid #eaf2e3",
+                    borderBottom: "1px solid #e3eaf2",
                     boxShadow: "0 2px 10px rgba(0,0,0,0.02)"
                 }
             }}
         >
             <AppShell.Header px="md">
                 <Group h="100%" justify="space-between">
-                    <Group>
-                        <Burger
-                            opened={opened}
-                            onClick={toggle}
-                            hiddenFrom="sm"
-                            size="md"
-                            color="#192612"
-                        />
-                        <BlueIDLogo width={80} height={80} />
-                    </Group>
+                    <BlueIDLogo width={80} height={80} />
+                    <Burger
+                        opened={opened}
+                        onClick={toggle}
+                        hiddenFrom="sm"
+                        size="md"
+                        color="#0E2348"
+                    />
                 </Group>
             </AppShell.Header>
 
@@ -56,7 +55,10 @@ const App = () => {
             </AppShell.Navbar>
 
             <AppShell.Main>
-                <Outlet />
+                <Box style={{ minHeight: 'calc(100vh - 140px)' }}>
+                    <Outlet />
+                </Box>
+                <Footer />
             </AppShell.Main>
         </AppShell>
     );

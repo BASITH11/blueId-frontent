@@ -6,9 +6,10 @@ import { notify } from "@utils/helpers";
  * ==================== SCHOOL ADMIN QUERIES ====================
  */
 
-export const useFetchMySchool = () => {
+export const useFetchMySchool = (enabled = true) => {
     return useQuery({
         queryKey: ["my-school"],
+        enabled: !!enabled,
         queryFn: async () => {
             const response = await axios.get(`school-admin/school`);
             return response.data || {};
@@ -16,9 +17,10 @@ export const useFetchMySchool = () => {
     });
 };
 
-export const useFetchAllocatedFields = () => {
+export const useFetchAllocatedFields = (enabled = true) => {
     return useQuery({
         queryKey: ["allocated-fields"],
+        enabled: !!enabled,
         queryFn: async () => {
             const response = await axios.get(`school-admin/school/allocated-fields`);
             return response.data?.fields || [];
@@ -89,9 +91,10 @@ export const useChangeMyPassword = () => {
     });
 };
 
-export const useFetchMySchoolBatches = () => {
+export const useFetchMySchoolBatches = (enabled = true) => {
     return useQuery({
         queryKey: ["my-school-batches"],
+        enabled: !!enabled,
         queryFn: async () => {
             const response = await axios.get(`school-admin/batches`);
             return response.data?.batches || [];

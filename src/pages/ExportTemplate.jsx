@@ -52,7 +52,7 @@ const ExportTemplate = () => {
     
     // 2. Batches (Admin version fetches by ID, School Admin version fetches for 'my school')
     const adminBatchesQuery = useFetchSchoolBatches(selectedSchool && isAdmin ? selectedSchool : null);
-    const schoolAdminBatchesQuery = useFetchMySchoolBatches();
+    const schoolAdminBatchesQuery = useFetchMySchoolBatches(!isAdmin);
     
     // Resolve which batches to show
     const batches = isAdmin ? (adminBatchesQuery.data || []) : (schoolAdminBatchesQuery.data || []);
@@ -61,9 +61,9 @@ const ExportTemplate = () => {
     // 3. Configuration fields for the selected school
     const { data: formConfig } = useFetchStudentFormFields(selectedSchool);
 
-    const THEME_PRIMARY = theme.colors.sage[5];
-    const THEME_DARK = theme.colors.sage[9];
-    const THEME_LIGHT = theme.colors.sage[2];
+    const THEME_PRIMARY = theme.colors.blueId[5];
+    const THEME_DARK = theme.colors.blueId[9];
+    const THEME_LIGHT = theme.colors.blueId[2];
 
     // Dynamic Visibility Logic: Only show session if it's an allocated field for this school
     const hasSessionField = useMemo(() => {

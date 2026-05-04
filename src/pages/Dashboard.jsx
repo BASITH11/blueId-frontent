@@ -32,6 +32,9 @@ import { useFetchMySchoolStats } from "../queries/schoolAdmin";
 import { useAuthStore } from "../config/authStore";
 import { useNavigate } from "@tanstack/react-router"; // Added for navigation
 import dayjs from "dayjs";
+import { env } from "../utils/helpers";
+
+const STORAGE_URL = env("API_BASE_URL").replace("/api/", "/storage/");
 
 const Dashboard = () => {
   const theme = useMantineTheme();
@@ -47,10 +50,10 @@ const Dashboard = () => {
 
   const isLoading = profileLoading || (isSchoolAdmin && statsLoading) || (isSuperAdmin && adminStatsLoading);
 
-  const THEME_PRIMARY = theme.colors.sage[5];
-  const THEME_LIGHT = theme.colors.sage[2];
-  const THEME_DARK = theme.colors.sage[9];
-  const THEME_BG = theme.colors.sage[0];
+  const THEME_PRIMARY = theme.colors.blueId[5];
+  const THEME_LIGHT = theme.colors.blueId[2];
+  const THEME_DARK = theme.colors.blueId[9];
+  const THEME_BG = theme.colors.blueId[0];
 
   if (isLoading) {
       return (
@@ -258,10 +261,10 @@ const Dashboard = () => {
                   <ScrollArea h={300}>
                       <Table verticalSpacing="sm">
                           <Table.Thead>
-                              <Table.Tr>
-                                  <Table.Th><Text size="xs" tt="uppercase" style={{ color: `${THEME_DARK}66` }}>Student</Text></Table.Th>
-                                  <Table.Th><Text size="xs" tt="uppercase" style={{ color: `${THEME_DARK}66` }}>Admission No</Text></Table.Th>
-                                  <Table.Th><Text size="xs" tt="uppercase" style={{ color: `${THEME_DARK}66` }}>Date</Text></Table.Th>
+                              <Table.Tr style={{ backgroundColor: THEME_PRIMARY }}>
+                                  <Table.Th style={{ color: "white", fontSize: "10px", fontWeight: 700 }}>STUDENT</Table.Th>
+                                  <Table.Th style={{ color: "white", fontSize: "10px", fontWeight: 700 }}>ADMISSION NO</Table.Th>
+                                  <Table.Th style={{ color: "white", fontSize: "10px", fontWeight: 700 }}>DATE</Table.Th>
                               </Table.Tr>
                           </Table.Thead>
                           <Table.Tbody>
@@ -269,7 +272,12 @@ const Dashboard = () => {
                                   <Table.Tr key={student.id}>
                                       <Table.Td>
                                           <Group gap="sm">
-                                              <Avatar size="sm" radius="xl" style={{ backgroundColor: THEME_LIGHT, color: THEME_DARK }}>
+                                              <Avatar 
+                                                  src={student.photo ? `${STORAGE_URL}${student.photo}` : null} 
+                                                  size="sm" 
+                                                  radius="xl" 
+                                                  style={{ backgroundColor: THEME_LIGHT, color: THEME_DARK }}
+                                              >
                                                   {student.student_name?.charAt(0)}
                                               </Avatar>
                                               <Stack gap={0}>
@@ -309,7 +317,7 @@ const Dashboard = () => {
                         <ThemeIcon style={{ backgroundColor: `${THEME_LIGHT}33`, color: THEME_PRIMARY }} size={50} radius="xl">
                             <IconChartBar size={28} />
                         </ThemeIcon>
-                        <Badge variant="light" color="sage" style={{ fontWeight: 700 }}>System Pulse</Badge>
+                        <Badge variant="light" color="blueId" style={{ fontWeight: 700 }}>System Pulse</Badge>
                     </Group>
                     <Text fw={700} size="xl" mt="md" color={THEME_DARK}>Platform Performance</Text>
                     <Text size="sm" style={{ color: `${THEME_DARK}88` }}>
@@ -349,7 +357,7 @@ const Dashboard = () => {
                         </Button>
                         <Button 
                             variant="outline" 
-                            color="sage" 
+                            color="blueId" 
                             radius="md" 
                             size="xs" 
                             fullWidth

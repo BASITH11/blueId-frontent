@@ -26,6 +26,7 @@ import {
   UnstyledButton,
   Avatar,
   Skeleton,
+  ScrollArea,
   useMantineTheme
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -58,9 +59,9 @@ const ManageRoles = () => {
   const updateMutation = useUpdateRole();
   const deleteMutation = useDeleteRole();
 
-  const THEME_PRIMARY = theme.colors.sage[5];
-  const THEME_LIGHT = theme.colors.sage[2];
-  const THEME_DARK = theme.colors.sage[9];
+  const THEME_PRIMARY = theme.colors.blueId[5];
+  const THEME_LIGHT = theme.colors.blueId[2];
+  const THEME_DARK = theme.colors.blueId[9];
 
   const form = useForm({
     initialValues: {
@@ -180,80 +181,59 @@ const ManageRoles = () => {
         </Button>
       </Flex>
 
-      {/* Modern Table Header */}
-      <Box px="xl" mb="md">
-          <SimpleGrid cols={4} spacing="xl">
-            <Group gap="xs">
-                <Checkbox size="xs" radius="sm" color={THEME_PRIMARY} />
-                <Text size="xs" fw={700} color="#adb5bd">Sl No.</Text>
-            </Group>
-            <Text size="xs" fw={700} color="#adb5bd">DISPLAY NAME</Text>
-            <Text size="xs" fw={700} color="#adb5bd">DESCRIPTION</Text>
-            <Text size="xs" fw={700} color="#adb5bd" align="right">ACTIONS</Text>
-          </SimpleGrid>
-      </Box>
-
-      {/* Dynamic Row Cards */}
-      <Stack gap="sm" mb="xl">
-        {rolesLoading ? (
-            Array(5).fill(0).map((_, i) => (
-                <Paper key={i} p="md" radius="lg" style={{ backgroundColor: "#ffffff" }}>
-                    <SimpleGrid cols={4} spacing="xl" align="center">
-                        <Group gap="xs">
-                            <Skeleton h={15} w={15} radius="xs" />
-                            <Skeleton h={15} w={30} radius="xs" />
-                        </Group>
-                        <Skeleton h={15} w={150} radius="xs" />
-                        <Skeleton h={12} w={200} radius="xs" />
-                        <Flex gap="sm" justify="flex-end">
-                            <Skeleton h={28} w={28} radius="sm" />
-                            <Skeleton h={28} w={28} radius="sm" />
-                            <Skeleton h={28} w={28} radius="sm" />
-                        </Flex>
-                    </SimpleGrid>
-                </Paper>
-            ))
-        ) : (
-            roles?.map((role, index) => (
-                <Paper 
-                    key={role.id} 
-                    p="md" 
-                    radius="lg" 
-                    style={{ 
-                        backgroundColor: "#ffffff", 
-                        border: "none", 
-                        transition: "transform 0.2s",
-                        cursor: "pointer"
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-2px)"}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
-                >
-                    <SimpleGrid cols={4} spacing="xl" align="center">
-                        <Group gap="xs">
-                            <Checkbox size="xs" radius="sm" color={THEME_PRIMARY} />
-                            <Text size="sm" fw={700} color={THEME_DARK}>{index + 1}</Text>
-                        </Group>
-
-                        <Text size="sm" fw={600} color={THEME_DARK}>{role.display_name}</Text>
-                        
-                        <Text size="sm" color="dimmed" truncate>{role.description}</Text>
-
-                        <Flex gap="sm" justify="flex-end">
-                            <ActionIcon variant="light" color="green" onClick={() => handleViewRole(role)}>
-                                <IconEye size={16} />
-                            </ActionIcon>
-                            <ActionIcon variant="light" color="blue" onClick={() => handleOpen(role)}>
-                                <IconEdit size={16} />
-                            </ActionIcon>
-                            <ActionIcon variant="light" color="red" onClick={() => handleDeleteClick(role)}>
-                                <IconTrash size={16} />
-                            </ActionIcon>
-                        </Flex>
-                    </SimpleGrid>
-                </Paper>
-            ))
-        )}
-      </Stack>
+      <Paper radius="lg" style={{ backgroundColor: "#ffffff", border: `1px solid ${THEME_LIGHT}22` }}>
+          <ScrollArea>
+              <Table verticalSpacing="md" horizontalSpacing="xl">
+                  <Table.Thead>
+                      <Table.Tr style={{ backgroundColor: THEME_PRIMARY }}>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>SL NO.</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>DISPLAY NAME</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>DESCRIPTION</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }} align="right">ACTIONS</Table.Th>
+                      </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody>
+                      {rolesLoading ? (
+                          Array(5).fill(0).map((_, i) => (
+                            <Table.Tr key={i}>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                            </Table.Tr>
+                          ))
+                      ) : (
+                          roles?.map((role, index) => (
+                              <Table.Tr key={role.id}>
+                                  <Table.Td>
+                                      <Text size="sm" fw={700} color={THEME_DARK}>{index + 1}</Text>
+                                  </Table.Td>
+                                  <Table.Td>
+                                      <Text size="sm" fw={600} color={THEME_DARK}>{role.display_name}</Text>
+                                  </Table.Td>
+                                  <Table.Td>
+                                      <Text size="sm" color="dimmed" truncate>{role.description}</Text>
+                                  </Table.Td>
+                                  <Table.Td align="right">
+                                    <Flex gap="sm" justify="flex-end">
+                                        <ActionIcon variant="light" color="green" onClick={() => handleViewRole(role)}>
+                                            <IconEye size={16} />
+                                        </ActionIcon>
+                                        <ActionIcon variant="light" color="blue" onClick={() => handleOpen(role)}>
+                                            <IconEdit size={16} />
+                                        </ActionIcon>
+                                        <ActionIcon variant="light" color="red" onClick={() => handleDeleteClick(role)}>
+                                            <IconTrash size={16} />
+                                        </ActionIcon>
+                                    </Flex>
+                                  </Table.Td>
+                              </Table.Tr>
+                          ))
+                      )}
+                  </Table.Tbody>
+              </Table>
+          </ScrollArea>
+      </Paper>
 
       {/* Role Form Drawer */}
       <Drawer

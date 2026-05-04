@@ -44,9 +44,9 @@ const ManageBatches = () => {
   const updateMutation = useUpdateBatch();
   const deleteMutation = useDeleteBatch();
 
-  const THEME_PRIMARY = theme.colors.sage[5];
-  const THEME_LIGHT = theme.colors.sage[2];
-  const THEME_DARK = theme.colors.sage[9];
+  const THEME_PRIMARY = theme.colors.blueId[5];
+  const THEME_LIGHT = theme.colors.blueId[2];
+  const THEME_DARK = theme.colors.blueId[9];
 
   const form = useForm({
     initialValues: {
@@ -141,7 +141,7 @@ const ManageBatches = () => {
                 >
                     <Flex align="center" justify="space-between">
                         <Group gap="md">
-                            <ActionIcon variant="light" color="sage" size="lg" radius="md">
+                            <ActionIcon variant="light" color="blueId" size="lg" radius="md">
                                 <IconFolders size={20} />
                             </ActionIcon>
                             <Box>
@@ -153,7 +153,7 @@ const ManageBatches = () => {
                         <Group gap="xs">
                             <ActionIcon 
                                 variant="subtle" 
-                                color="sage" 
+                                color="blueId" 
                                 onClick={() => handleOpen(batch)}
                             >
                                 <IconEdit size={18} />

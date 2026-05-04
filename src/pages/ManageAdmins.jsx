@@ -21,6 +21,8 @@ import {
   Menu,
   ThemeIcon,
   Modal,
+  Table,
+  ScrollArea,
   Skeleton,
   useMantineTheme
 } from "@mantine/core";
@@ -60,9 +62,9 @@ const ManageAdmins = () => {
   const deleteMutation = useDeleteAdmin();
   const statusMutation = useUpdateAdminStatus();
 
-  const THEME_PRIMARY = theme.colors.sage[5];
-  const THEME_LIGHT = theme.colors.sage[2];
-  const THEME_DARK = theme.colors.sage[9];
+  const THEME_PRIMARY = theme.colors.blueId[5];
+  const THEME_LIGHT = theme.colors.blueId[2];
+  const THEME_DARK = theme.colors.blueId[9];
 
   const form = useForm({
     initialValues: {
@@ -171,131 +173,110 @@ const ManageAdmins = () => {
           </SimpleGrid>
       </Stack>
 
-      {/* Table Header */}
-      <Box px="xl" mb="md">
-          <SimpleGrid cols={5} spacing="xl">
-            <Text size="xs" fw={700} color="#adb5bd">ADMINISTRATOR</Text>
-            <Text size="xs" fw={700} color="#adb5bd">CONTACT</Text>
-            <Text size="xs" fw={700} color="#adb5bd">ROLE</Text>
-            <Text size="xs" fw={700} color="#adb5bd">STATUS</Text>
-            <Text size="xs" fw={700} color="#adb5bd" align="right">ACTIONS</Text>
-          </SimpleGrid>
-      </Box>
-
-      {/* Admin Cards Stack */}
-      <Stack gap="sm" mb="xl">
-        {isLoading ? (
-            Array(5).fill(0).map((_, i) => (
-                <Paper key={i} p="md" radius="lg" style={{ backgroundColor: "#ffffff" }}>
-                    <SimpleGrid cols={5} spacing="xl" align="center">
-                        <Group gap="sm">
-                            <Skeleton h={40} w={40} circle />
-                            <Box>
-                                <Skeleton h={15} w={120} mb={6} radius="xs" />
-                                <Skeleton h={10} w={80} radius="xs" />
-                            </Box>
-                        </Group>
-                        <Box>
-                            <Skeleton h={12} w={150} mb={6} radius="xs" />
-                            <Skeleton h={8} w={100} radius="xs" />
-                        </Box>
-                        <Skeleton h={20} w={80} radius="xs" />
-                        <Skeleton h={25} w={60} radius="xl" />
-                        <Flex justify="flex-end">
-                            <Skeleton h={30} w={30} radius="md" />
-                        </Flex>
-                    </SimpleGrid>
-                </Paper>
-            ))
-        ) : (
-            admins?.map((admin) => (
-                <Paper 
-                    key={admin.id} 
-                    p="md" 
-                    radius="lg" 
-                    style={{ 
-                        backgroundColor: "#ffffff", 
-                        border: "none", 
-                    }}
-                >
-                    <SimpleGrid cols={5} spacing="xl" align="center">
-                        <Group gap="sm">
-                            <Avatar color={THEME_PRIMARY} radius="xl">
-                                {admin.name.charAt(0)}
-                            </Avatar>
-                            <Box>
-                                <Text size="sm" fw={700} color={THEME_DARK}>{admin.name}</Text>
-                                <Text size="xs" color="dimmed">ID: #{admin.id}</Text>
-                            </Box>
-                        </Group>
-
-                        <Box>
-                            <Group gap="xs" mb={4}>
-                                <IconMail size={14} color="#adb5bd" />
-                                <Text size="sm" color={THEME_DARK}>{admin.email}</Text>
-                            </Group>
-                            {admin.mobile && (
-                                <Group gap="xs">
-                                    <IconDeviceMobile size={12} color="#adb5bd" />
-                                    <Text size="xs" color="dimmed">{admin.mobile}</Text>
-                                </Group>
-                            )}
-                        </Box>
-
-                        <Box>
-                            <Badge color={admin.role?.name === 'super_admin' ? "dark" : "gray"} variant="outline" size="sm" radius="xs">
-                                {admin.role?.display_name || admin.role?.name}
-                            </Badge>
-                        </Box>
-
-                        <Badge 
-                            variant="light" 
-                            color={(admin.user_status?.status_name === 'active' || admin.user_status_id === 1) ? "green" : "red"}
-                            size="md"
-                            radius="xl"
-                        >
-                            {(admin.user_status?.status_name === 'active' || admin.user_status_id === 1) ? "Active" : "Disabled"}
-                        </Badge>
-
-                        <Flex gap="sm" justify="flex-end">
-                            <Menu shadow="md" width={200} radius="md">
-                                <Menu.Target>
-                                    <ActionIcon variant="subtle" color="gray">
-                                        <IconDots size={18} />
-                                    </ActionIcon>
-                                </Menu.Target>
-
-                                <Menu.Dropdown>
-                                    <Menu.Label>Account</Menu.Label>
-                                    <Menu.Item leftSection={<IconEdit size={14} />} onClick={() => handleOpenEdit(admin)}>
-                                        Configure Profile
-                                    </Menu.Item>
-                                    <Menu.Item 
-                                        leftSection={<IconShieldLock size={14} />} 
-                                        onClick={() => toggleStatus(admin)}
-                                    >
-                                        { (admin.user_status?.status_name === 'active' || admin.user_status_id === 1) ? 'Disable Access' : 'Enable Access' }
-                                    </Menu.Item>
-                                    
-                                    <Menu.Divider />
-                                    
-                                    <Menu.Label>Security</Menu.Label>
-                                    <Menu.Item 
-                                        color="red" 
-                                        leftSection={<IconTrash size={14} />} 
-                                        onClick={() => handleDeleteClick(admin)}
-                                        disabled={admin.role?.name === 'super_admin'}
-                                    >
-                                        Revoke Account
-                                    </Menu.Item>
-                                </Menu.Dropdown>
-                            </Menu>
-                        </Flex>
-                    </SimpleGrid>
-                </Paper>
-            ))
-        )}
-      </Stack>
+      <Paper radius="lg" style={{ backgroundColor: "#ffffff", border: `1px solid ${THEME_LIGHT}22` }}>
+          <ScrollArea>
+              <Table verticalSpacing="md" horizontalSpacing="xl">
+                  <Table.Thead>
+                      <Table.Tr style={{ backgroundColor: THEME_PRIMARY }}>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>ADMINISTRATOR</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>CONTACT</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>ROLE</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>STATUS</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }} align="right">ACTIONS</Table.Th>
+                      </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody>
+                      {isLoading ? (
+                          Array(5).fill(0).map((_, i) => (
+                            <Table.Tr key={i}>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                            </Table.Tr>
+                          ))
+                      ) : (
+                          admins?.map((admin) => (
+                              <Table.Tr key={admin.id}>
+                                  <Table.Td>
+                                      <Group gap="sm">
+                                          <Avatar color={THEME_PRIMARY} radius="xl" size="sm">
+                                              {admin.name.charAt(0)}
+                                          </Avatar>
+                                          <Box>
+                                              <Text size="sm" fw={600} color={THEME_DARK}>{admin.name}</Text>
+                                              <Text size="xs" color="dimmed">ID: #{admin.id}</Text>
+                                          </Box>
+                                      </Group>
+                                  </Table.Td>
+                                  <Table.Td>
+                                      <Box>
+                                          <Group gap="xs" mb={4}>
+                                              <IconMail size={14} color="#adb5bd" />
+                                              <Text size="sm" color={THEME_DARK}>{admin.email}</Text>
+                                          </Group>
+                                          {admin.mobile && (
+                                              <Group gap="xs">
+                                                  <IconDeviceMobile size={12} color="#adb5bd" />
+                                                  <Text size="xs" color="dimmed">{admin.mobile}</Text>
+                                              </Group>
+                                          )}
+                                      </Box>
+                                  </Table.Td>
+                                  <Table.Td>
+                                      <Badge color={admin.role?.name === 'super_admin' ? "dark" : "gray"} variant="outline" size="sm" radius="xs">
+                                          {admin.role?.display_name || admin.role?.name}
+                                      </Badge>
+                                  </Table.Td>
+                                  <Table.Td>
+                                      <Badge 
+                                          variant="light" 
+                                          color={(admin.user_status?.status_name === 'active' || admin.user_status_id === 1) ? "green" : "red"}
+                                          size="sm"
+                                          radius="xl"
+                                      >
+                                          {(admin.user_status?.status_name === 'active' || admin.user_status_id === 1) ? "Active" : "Disabled"}
+                                      </Badge>
+                                  </Table.Td>
+                                  <Table.Td align="right">
+                                    <Menu shadow="md" width={200} radius="md">
+                                        <Menu.Target>
+                                            <ActionIcon variant="subtle" color="blueId">
+                                                <IconDots size={18} />
+                                            </ActionIcon>
+                                        </Menu.Target>
+                                        <Menu.Dropdown>
+                                            <Menu.Label>Account</Menu.Label>
+                                            <Menu.Item leftSection={<IconEdit size={14} />} onClick={() => handleOpenEdit(admin)}>
+                                                Configure Profile
+                                            </Menu.Item>
+                                            <Menu.Item 
+                                                leftSection={<IconShieldLock size={14} />} 
+                                                onClick={() => toggleStatus(admin)}
+                                            >
+                                                { (admin.user_status?.status_name === 'active' || admin.user_status_id === 1) ? 'Disable Access' : 'Enable Access' }
+                                            </Menu.Item>
+                                            <Menu.Divider />
+                                            <Menu.Label>Security</Menu.Label>
+                                            <Menu.Item 
+                                                color="red" 
+                                                leftSection={<IconTrash size={14} />} 
+                                                onClick={() => handleDeleteClick(admin)}
+                                                disabled={admin.role?.name === 'super_admin'}
+                                            >
+                                                Revoke Account
+                                            </Menu.Item>
+                                        </Menu.Dropdown>
+                                    </Menu>
+                                  </Table.Td>
+                              </Table.Tr>
+                          ))
+                      )}
+                  </Table.Tbody>
+              </Table>
+          </ScrollArea>
+      </Paper>
 
       {/* Edit Admin Drawer */}
       <Drawer

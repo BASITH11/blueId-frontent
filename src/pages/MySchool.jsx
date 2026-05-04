@@ -56,14 +56,15 @@ const MySchool = () => {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [logoPreview, setLogoPreview] = useState(null);
 
-  const { user: authUser } = useAuthStore();
-  const { data: schoolData, isLoading } = useFetchMySchool();
+  const { user: authUser, role } = useAuthStore();
+  const isSchoolAdmin = (role?.name || role)?.toString()?.toLowerCase() === 'school_admin';
+  const { data: schoolData, isLoading } = useFetchMySchool(isSchoolAdmin);
   const updateProfileMutation = useUpdateMyProfile();
   const updateLogoMutation = useUpdateMySchoolLogo();
 
-  const THEME_PRIMARY = theme.colors.sage[5];
-  const THEME_LIGHT = theme.colors.sage[2];
-  const THEME_DARK = theme.colors.sage[9];
+  const THEME_PRIMARY = theme.colors.blueId[5];
+  const THEME_LIGHT = theme.colors.blueId[2];
+  const THEME_DARK = theme.colors.blueId[9];
 
   const form = useForm({
     initialValues: {
@@ -310,7 +311,7 @@ const MySchool = () => {
                 </Avatar>
                 <Box>
                   <Text fw={700} size="md" color={THEME_DARK}>{adminUser?.name}</Text>
-                  <Badge variant="outline" color="sage" size="sm">Administrator</Badge>
+                  <Badge variant="outline" color="blueId" size="sm">Administrator</Badge>
                 </Box>
               </Group>
               <Divider color={`${THEME_LIGHT}11`} mb="md" />

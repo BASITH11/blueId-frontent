@@ -21,6 +21,9 @@ import {
   Badge,
   Menu,
   ThemeIcon,
+  Pagination,
+  Table,
+  ScrollArea,
   Modal,
   Checkbox,
   Skeleton
@@ -89,9 +92,9 @@ const ManageSchools = () => {
   const assignBatchesMutation = useAssignSchoolBatches();
   const allocateFieldsMutation = useAllocateSchoolFields();
 
-  const THEME_PRIMARY = theme.colors.sage[5];
-  const THEME_LIGHT = theme.colors.sage[2];
-  const THEME_DARK = theme.colors.sage[9];
+  const THEME_PRIMARY = theme.colors.blueId[5];
+  const THEME_LIGHT = theme.colors.blueId[2];
+  const THEME_DARK = theme.colors.blueId[9];
 
   const form = useForm({
     initialValues: {
@@ -184,9 +187,13 @@ const ManageSchools = () => {
   // Sync selectedBatches when school-specific assignments are fetched
   React.useEffect(() => {
     if (batchModalOpened && assignedBatches) {
-        setSelectedBatches(assignedBatches.map(b => b.id));
+        const batchIds = assignedBatches.map(b => b.id);
+        // Only update if the IDs are actually different to prevent infinite loops
+        if (JSON.stringify(batchIds) !== JSON.stringify(selectedBatches)) {
+            setSelectedBatches(batchIds);
+        }
     }
-  }, [batchModalOpened, assignedBatches]);
+  }, [batchModalOpened, assignedBatches, selectedBatches]);
 
   const handleOpenFields = (school) => {
     setSelectedSchool(school);
@@ -202,9 +209,13 @@ const ManageSchools = () => {
                 master_field_id: f.id,
                 is_required: f.is_required
             }));
-        setFieldConfig(initialConfig);
+            
+        // Only update if the config is actually different
+        if (JSON.stringify(initialConfig) !== JSON.stringify(fieldConfig)) {
+            setFieldConfig(initialConfig);
+        }
     }
-  }, [fieldModalOpened, schoolAllocations]);
+  }, [fieldModalOpened, schoolAllocations, fieldConfig]);
 
   const handleBatchAllocation = () => {
     assignBatchesMutation.mutate({
@@ -246,133 +257,105 @@ const ManageSchools = () => {
         </Text>
       </Flex>
 
-      {/* Table Header */}
-      <Box px="xl" mb="md">
-          <SimpleGrid cols={5} spacing="xl">
-            <Text size="xs" fw={700} color="#adb5bd">INSTITUTION</Text>
-            <Text size="xs" fw={700} color="#adb5bd">LOCATION</Text>
-            <Text size="xs" fw={700} color="#adb5bd">ADMINISTRATOR</Text>
-            <Text size="xs" fw={700} color="#adb5bd">STATUS</Text>
-            <Text size="xs" fw={700} color="#adb5bd" align="right">ACTIONS</Text>
-          </SimpleGrid>
-      </Box>
-
-      {/* School Cards Stack */}
-      <Stack gap="sm" mb="xl">
-        {isLoading ? (
-            Array(5).fill(0).map((_, i) => (
-                <Paper key={i} p="md" radius="lg" style={{ backgroundColor: "#ffffff" }}>
-                    <SimpleGrid cols={5} spacing="xl" align="center">
-                        <Group gap="sm">
-                            <Skeleton h={40} w={40} radius="md" />
-                            <Box>
-                                <Skeleton h={15} w={120} mb={6} radius="xs" />
-                                <Skeleton h={10} w={80} radius="xs" />
-                            </Box>
-                        </Group>
-                        <Skeleton h={15} w={100} radius="xs" />
-                        <Box>
-                            <Skeleton h={15} w={120} mb={6} radius="xs" />
-                            <Skeleton h={10} w={150} radius="xs" />
-                        </Box>
-                        <Skeleton h={25} w={60} radius="xl" />
-                        <Flex justify="flex-end">
-                            <Skeleton h={30} w={30} radius="md" />
-                        </Flex>
-                    </SimpleGrid>
-                </Paper>
-            ))
-        ) : (
-            schools?.map((school) => (
-                <Paper 
-                    key={school.id} 
-                    p="md" 
-                    radius="lg" 
-                    style={{ 
-                        backgroundColor: "#ffffff", 
-                        border: "none", 
-                        transition: "transform 0.2s"
-                    }}
-                >
-                    <SimpleGrid cols={5} spacing="xl" align="center">
-                        <Group gap="sm">
-                            <Avatar 
-                              src={school.logo ? `${STORAGE_URL}${school.logo}` : null} 
-                              radius="md" 
-                              size="md" 
-                              color={THEME_PRIMARY}
-                            >
-                                <IconBuildingStore size={20} />
-                            </Avatar>
-                            <Box>
-                                <Text size="sm" fw={700} color={THEME_DARK}>{school.school_name}</Text>
-                                <Text size="xs" color="dimmed">Code: {school.school_code}</Text>
-                            </Box>
-                        </Group>
-
-                        <Group gap="xs">
-                            <IconMapPin size={14} color="#adb5bd" />
-                            <Text size="sm" color={THEME_DARK}>{school.city || "N/A"}, {school.state || ""}</Text>
-                        </Group>
-
-                        <Box>
-                            <Group gap="xs" mb={4}>
-                                <IconUser size={14} color="#adb5bd" />
-                                <Text size="sm" fw={600} color={THEME_DARK}>{school.user?.name || "Unassigned"}</Text>
-                            </Group>
-                            <Group gap="xs">
-                                <IconMail size={12} color="#adb5bd" />
-                                <Text size="xs" color="dimmed">{school.user?.email}</Text>
-                            </Group>
-                        </Box>
-
-                        <Badge 
-                            variant="light" 
-                            color={school.user?.user_status_id === 1 ? "green" : "red"}
-                            size="md"
-                            radius="xl"
-                        >
-                            {school.user?.user_status_id === 1 ? "Active" : "Closed"}
-                        </Badge>
-
-                        <Flex gap="sm" justify="flex-end">
-                            <Menu shadow="md" width={200} radius="md">
-                                <Menu.Target>
-                                    <ActionIcon variant="subtle" color="gray">
-                                        <IconDots size={18} />
-                                    </ActionIcon>
-                                </Menu.Target>
-
-                                <Menu.Dropdown>
-                                    <Menu.Label>Management</Menu.Label>
-                                    <Menu.Item leftSection={<IconEdit size={14} />} onClick={() => handleOpenEdit(school)}>
-                                        Edit Details
-                                    </Menu.Item>
-                                    <Menu.Item leftSection={<IconFolders size={14} />} onClick={() => handleOpenBatch(school)}>
-                                        Manage Batches
-                                    </Menu.Item>
-                                    <Menu.Item leftSection={<IconListDetails size={14} />} onClick={() => handleOpenFields(school)}>
-                                        Configure Fields
-                                    </Menu.Item>
-                                    
-                                    <Menu.Divider />
-                                    
-                                    <Menu.Label>Danger Zone</Menu.Label>
-                                    <Menu.Item 
-                                        color="red" 
-                                        leftSection={<IconTrash size={14} />} 
-                                        onClick={() => handleDeleteClick(school)}
-                                    >
-                                        Delete Institution
-                                    </Menu.Item>
-                                </Menu.Dropdown>
-                            </Menu>
-                        </Flex>
-                    </SimpleGrid>
-                </Paper>
-            ))
-        )}
-      </Stack>
+      <Paper radius="lg" style={{ backgroundColor: "#ffffff", border: `1px solid ${THEME_LIGHT}22` }}>
+          <ScrollArea>
+              <Table verticalSpacing="md" horizontalSpacing="xl">
+                  <Table.Thead>
+                      <Table.Tr style={{ backgroundColor: THEME_PRIMARY }}>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>INSTITUTION</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>LOCATION</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>ADMINISTRATOR</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }}>STATUS</Table.Th>
+                          <Table.Th style={{ color: "white", fontSize: "11px", fontWeight: 700 }} align="right">ACTIONS</Table.Th>
+                      </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody>
+                      {isLoading ? (
+                          Array(5).fill(0).map((_, i) => (
+                            <Table.Tr key={i}>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                                <Table.Td><Skeleton h={20} radius="md" /></Table.Td>
+                            </Table.Tr>
+                          ))
+                      ) : schools?.length === 0 ? (
+                          <Table.Tr><Table.Td colSpan={5} align="center" color="dimmed" py="xl">No institutions found.</Table.Td></Table.Tr>
+                      ) : (
+                          schools?.map((school) => (
+                              <Table.Tr key={school.id}>
+                                  <Table.Td>
+                                      <Group gap="sm">
+                                          <Avatar 
+                                            src={school.logo ? `${STORAGE_URL}${school.logo}` : null} 
+                                            radius="md" 
+                                            size="sm" 
+                                            color="blueId"
+                                          >
+                                              <IconBuildingStore size={18} />
+                                          </Avatar>
+                                          <Box>
+                                              <Text size="sm" fw={600} color={THEME_DARK}>{school.school_name}</Text>
+                                              <Text size="xs" color="dimmed">Code: {school.school_code}</Text>
+                                          </Box>
+                                      </Group>
+                                  </Table.Td>
+                                  <Table.Td>
+                                      <Group gap="xs">
+                                          <IconMapPin size={14} color="#adb5bd" />
+                                          <Text size="sm" color={THEME_DARK}>{school.city || "N/A"}</Text>
+                                      </Group>
+                                  </Table.Td>
+                                  <Table.Td>
+                                      <Box>
+                                          <Text size="sm" fw={600} color={THEME_DARK}>{school.user?.name || "Unassigned"}</Text>
+                                          <Text size="xs" color="dimmed">{school.user?.email}</Text>
+                                      </Box>
+                                  </Table.Td>
+                                  <Table.Td>
+                                      <Badge 
+                                          variant="light" 
+                                          color={school.user?.user_status_id === 1 ? "green" : "red"}
+                                          size="sm"
+                                          radius="xl"
+                                      >
+                                          {school.user?.user_status_id === 1 ? "Active" : "Closed"}
+                                      </Badge>
+                                  </Table.Td>
+                                  <Table.Td align="right">
+                                    <Menu shadow="md" width={200} radius="md">
+                                        <Menu.Target>
+                                            <ActionIcon variant="subtle" color="blueId">
+                                                <IconDots size={18} />
+                                            </ActionIcon>
+                                        </Menu.Target>
+                                        <Menu.Dropdown>
+                                            <Menu.Label>Management</Menu.Label>
+                                            <Menu.Item leftSection={<IconEdit size={14} />} onClick={() => handleOpenEdit(school)}>
+                                                Edit Details
+                                            </Menu.Item>
+                                            <Menu.Item leftSection={<IconFolders size={14} />} onClick={() => handleOpenBatch(school)}>
+                                                Manage Batches
+                                            </Menu.Item>
+                                            <Menu.Item leftSection={<IconListDetails size={14} />} onClick={() => handleOpenFields(school)}>
+                                                Configure Fields
+                                            </Menu.Item>
+                                            <Menu.Divider />
+                                            <Menu.Label>Danger Zone</Menu.Label>
+                                            <Menu.Item color="red" leftSection={<IconTrash size={14} />} onClick={() => handleDeleteClick(school)}>
+                                                Delete Institution
+                                            </Menu.Item>
+                                        </Menu.Dropdown>
+                                    </Menu>
+                                  </Table.Td>
+                              </Table.Tr>
+                          ))
+                      )}
+                  </Table.Tbody>
+              </Table>
+          </ScrollArea>
+      </Paper>
 
       {/* Edit School Drawer */}
       <Drawer
@@ -397,6 +380,13 @@ const ManageSchools = () => {
       >
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Stack gap="lg">
+              <Divider label="Basic Information" labelPosition="center" color={`${THEME_LIGHT}44`} />
+              <TextInput label="Institution Name" required {...form.getInputProps("school_name")} />
+              <SimpleGrid cols={2}>
+                <TextInput label="Institution Code" required {...form.getInputProps("school_code")} />
+                <TextInput label="Institution Phone" {...form.getInputProps("contact_no")} />
+              </SimpleGrid>
+
               <Divider label="Location & Physical Address" labelPosition="center" color={`${THEME_LIGHT}44`} />
               <SimpleGrid cols={2}>
                 <TextInput label="City" {...form.getInputProps("city")} />

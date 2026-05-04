@@ -55,14 +55,14 @@ export default function Sidebar({ toggle }) {
         ? allMenuItems.filter(item => !item.superAdminOnly) 
         : allMenuItems;
 
-    const THEME_PRIMARY = theme.colors.sage[5];
-    const THEME_LIGHT = theme.colors.sage[2];
-    const THEME_DARK = theme.colors.sage[9];
+    const THEME_PRIMARY = theme.colors.blueId[5];
+    const THEME_LIGHT = theme.colors.blueId[2];
+    const THEME_DARK = theme.colors.blueId[9];
 
     return (
         <Box style={{ display: "flex", flexDirection: "column", height: "100%", backgroundColor: "#ffffff" }}>
-            <Box p="md" mb="md" style={{ display: 'flex', justifyContent: 'center' }}>
-                <BlueIDLogo width={180} height={180} />
+            <Box p="sm" mb={0} visibleFrom="sm" style={{ display: 'flex', justifyContent: 'center' }}>
+                <BlueIDLogo width={120} height={120} />
             </Box>
 
             <ScrollArea style={{ flex: 1 }} px="lg">
@@ -75,14 +75,14 @@ export default function Sidebar({ toggle }) {
                                 component={Link}
                                 to={link.to}
                                 label={
-                                    <Text fw={600} size="sm" color={isActive ? THEME_DARK : "#5d6b54"}>
+                                    <Text fw={600} size="sm" color={isActive ? THEME_DARK : "#4b5b7c"}>
                                         {link.label}
                                     </Text>
                                 }
-                                leftSection={<link.icon size={20} color={isActive ? THEME_PRIMARY : "#5d6b54"} stroke={isActive ? 2.5 : 1.5} />}
+                                leftSection={<link.icon size={20} color={isActive ? THEME_PRIMARY : "#4b5b7c"} stroke={isActive ? 2.5 : 1.5} />}
                                 rightSection={
                                     link.badge ? (
-                                        <Badge variant="light" color="sage" size="sm" style={{ fontWeight: 700 }}>
+                                        <Badge variant="light" color="blueId" size="sm" style={{ fontWeight: 700 }}>
                                             {link.badge}
                                         </Badge>
                                     ) : null
@@ -96,7 +96,7 @@ export default function Sidebar({ toggle }) {
                                         backgroundColor: isActive ? `${THEME_LIGHT}33` : "transparent",
                                         transition: "all 0.2s",
                                         "&:hover": {
-                                            backgroundColor: isActive ? `${THEME_LIGHT}44` : theme.colors.sage[0]
+                                            backgroundColor: isActive ? `${THEME_LIGHT}44` : theme.colors.blueId[0]
                                         }
                                     }
                                 }}
@@ -106,7 +106,7 @@ export default function Sidebar({ toggle }) {
                 </Stack>
             </ScrollArea>
 
-            <Box p="lg" mt="auto" style={{ borderTop: "1px solid #f4f6f0" }}>
+            <Box p="lg" mt="auto" style={{ borderTop: "1px solid #e1e9f0" }}>
                 <NavLink
                     label={<Text fw={600} size="sm" color="#fa5252">Sign Out</Text>}
                     leftSection={<IconLogout size={20} color="#fa5252" />}

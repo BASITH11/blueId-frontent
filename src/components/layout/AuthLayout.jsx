@@ -9,7 +9,8 @@ import {
     Image,
     Box,
     Checkbox,
-    ThemeIcon
+    ThemeIcon,
+    useMantineTheme
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconEyeCheck, IconEyeOff, IconSchool, IconShieldCheck } from "@tabler/icons-react";
@@ -18,9 +19,14 @@ import { useLogin } from "@queries/auth";
 import BlueIDLogo from "../../assets/images/blueIdLogo";
 
 const VisibilityToggleIcon = ({ reveal }) =>
-    reveal ? <IconEyeOff size={18} color="#4a5940" /> : <IconEyeCheck size={18} color="#4a5940" />;
+    reveal ? <IconEyeOff size={18} color="var(--mantine-color-blueId-9)" /> : <IconEyeCheck size={18} color="var(--mantine-color-blueId-9)" />;
 
 const Login = () => {
+    const theme = useMantineTheme();
+    const THEME_PRIMARY = theme.colors.blueId[9];
+    const THEME_LIGHT = theme.colors.blueId[2];
+    const THEME_DARK = theme.colors.blueId[9];
+
     const form = useForm({
         mode: "uncontrolled",
         initialValues: {
@@ -35,19 +41,19 @@ const Login = () => {
 
     const inputStyles = {
         input: {
-            backgroundColor: "#f2f4ec",
+            backgroundColor: theme.colors.blueId[0],
             border: "none",
-            color: "#192612",
+            color: THEME_DARK,
             height: "42px",
             borderRadius: "6px",
             fontSize: "0.9rem",
             transition: "all 0.2s ease",
             "&:focus": {
-                backgroundColor: "#e8ede0",
+                backgroundColor: theme.colors.blueId[1],
             }
         },
         label: {
-            color: "#192612",
+            color: THEME_DARK,
             fontWeight: 700,
             marginBottom: "6px",
             fontSize: "0.75rem"
@@ -56,7 +62,7 @@ const Login = () => {
 
     const curlyCurvesSvg = `
         <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-            <g fill="none" stroke="#7c9367" stroke-width="2" stroke-opacity="0.35" stroke-linecap="round">
+            <g fill="none" stroke="${theme.colors.blueId[2]}" stroke-width="2" stroke-opacity="0.35" stroke-linecap="round">
                 <path d="M0 20 Q 20 0 40 20 T 80 20 M0 60 Q 20 40 40 60 T 80 60" />
                 <path d="M20 0 Q 40 20 20 40 T 20 80 M60 0 Q 80 20 60 40 T 60 80" />
             </g>
@@ -68,7 +74,7 @@ const Login = () => {
         <Box 
             style={{ 
                 minHeight: "100vh", 
-                backgroundColor: "#7c9367", 
+                backgroundColor: THEME_PRIMARY, 
                 padding: "1.5rem",
                 display: "flex",
                 fontFamily: "Inter, sans-serif"
@@ -85,7 +91,7 @@ const Login = () => {
             <Box 
                 style={{ 
                     flex: 1,
-                    backgroundColor: "#c2d6af", 
+                    backgroundColor: theme.colors.blueId[0], 
                     borderRadius: "24px",
                     overflow: "hidden",
                     position: "relative",
@@ -118,7 +124,7 @@ const Login = () => {
                             fontSize: "clamp(2.5rem, 4vw, 4.5rem)", 
                             fontWeight: 400, 
                             lineHeight: 1.1,
-                            color: "#192612",
+                            color: THEME_DARK,
                             marginBottom: "1.5rem"
                         }}
                     >
@@ -127,7 +133,7 @@ const Login = () => {
 
                     <Text 
                         style={{ 
-                            color: "#384729", 
+                            color: theme.colors.blueId[7], 
                             fontSize: "0.95rem", 
                             lineHeight: 1.5,
                             maxWidth: "400px",
@@ -143,7 +149,7 @@ const Login = () => {
                             radius="xl" 
                             leftSection={<IconShieldCheck size={16} />}
                             style={{ 
-                                color: "#192612", 
+                                color: THEME_DARK, 
                                 fontSize: "0.75rem", 
                                 letterSpacing: "1px", 
                                 fontWeight: 700,
@@ -184,7 +190,7 @@ const Login = () => {
                             style={{ 
                                 fontFamily: "Georgia, 'Times New Roman', serif",
                                 fontSize: "1.75rem",
-                                color: "#192612",
+                                color: THEME_DARK,
                                 marginBottom: "2rem"
                             }}
                         >
@@ -219,8 +225,8 @@ const Login = () => {
                                     checked={form.values.remember}
                                     onChange={(event) => form.setFieldValue("remember", event.currentTarget.checked)}
                                     styles={{
-                                        label: { color: "#384729", fontSize: "0.85rem" },
-                                        input: { borderColor: "#c2d6af", backgroundColor: "transparent" }
+                                        label: { color: theme.colors.blueId[7], fontSize: "0.85rem" },
+                                        input: { borderColor: theme.colors.blueId[3], backgroundColor: "transparent" }
                                     }}
                                     mt={4}
                                     mb={12}
@@ -233,8 +239,8 @@ const Login = () => {
                                     loading={loginResponse.isPending || loginResponse.isLoading}
                                     style={{
                                         height: "44px",
-                                        backgroundColor: "#bed4af", 
-                                        color: "#192612",
+                                        backgroundColor: THEME_PRIMARY, 
+                                        color: "white",
                                         fontSize: "0.8rem",
                                         fontWeight: 700,
                                         letterSpacing: "1px",
@@ -249,7 +255,7 @@ const Login = () => {
                                     <Link
                                         to="/auth/forgot-password"
                                         style={{
-                                            color: "#192612",
+                                            color: THEME_DARK,
                                             fontSize: "0.75rem",
                                             fontWeight: 700,
                                             letterSpacing: "0.5px",

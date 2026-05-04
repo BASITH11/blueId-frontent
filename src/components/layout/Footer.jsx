@@ -1,35 +1,29 @@
-import {
-    Anchor,
-    Box,
-    Group,
-    Text,
-    ThemeIcon,
-    Image
-} from "@mantine/core";
-import { IconSchool } from "@tabler/icons-react";
-import BlueIDLogo from "../../assets/images/blueIdLogo";
+import { Box, Text, Container, Flex, Stack } from "@mantine/core";
 
-export default function Footer() {
+const Footer = () => {
+    const currentYear = new Date().getFullYear();
+
     return (
         <Box 
-            p="md" 
-            mt="xl" 
-            style={{ 
-                borderTop: "1px solid #eaf2e3", 
-                backgroundColor: "transparent"
-            }}
+            component="footer" 
+            mt={40} 
+            pb="xl" 
+            px="md"
         >
-            <Group justify="space-between" align="center">
-                <Box>
-                    <BlueIDLogo width={100} height={100} />
-                </Box>
-
-                <Box style={{ textAlign: "right" }}>
-                    <Text size="xs" color="dimmed"> 
-                        © {new Date().getFullYear()} All rights reserved.
-                    </Text>
-                </Box>
-            </Group>
-       </Box>
+            <Container size="xl">
+                <Flex justify="flex-end" align="center">
+                    <Stack gap={2} align="flex-end">
+                        <Text size="xs" color="dimmed" style={{ letterSpacing: '0.5px' }}>
+                            &copy; {currentYear} <span style={{ fontWeight: 600, color: 'var(--mantine-color-blueId-9)' }}>BlueID</span> • All Rights Reserved
+                        </Text>
+                        <Text size="10px" color="dimmed" fw={500} style={{ opacity: 0.8 }}>
+                            Powered by <span style={{ color: 'var(--mantine-color-blueId-6)' }}>Bluewhyte</span>
+                        </Text>
+                    </Stack>
+                </Flex>
+            </Container>
+        </Box>
     );
-}
+};
+
+export default Footer;

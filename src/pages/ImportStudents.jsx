@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { 
-    Box, 
-    Text, 
-    Paper, 
-    Button, 
-    Flex, 
-    Stack, 
-    Group, 
-    Select, 
-    FileInput, 
+import {
+    Box,
+    Text,
+    Paper,
+    Button,
+    Flex,
+    Stack,
+    Group,
+    Select,
+    FileInput,
     TextInput,
     useMantineTheme,
     SimpleGrid,
@@ -17,10 +17,10 @@ import {
     ThemeIcon,
     Alert
 } from "@mantine/core";
-import { 
-    IconFileUpload, 
-    IconSchool, 
-    IconPhotoUp, 
+import {
+    IconFileUpload,
+    IconSchool,
+    IconPhotoUp,
     IconInfoCircle,
     IconFileSpreadsheet,
     IconCloudUpload,
@@ -48,9 +48,9 @@ const ImportStudents = () => {
     const importStudentsMutation = useImportStudents();
     const importPhotosMutation = useImportPhotos();
 
-    const THEME_PRIMARY = theme.colors.sage[5];
-    const THEME_DARK = theme.colors.sage[9];
-    const THEME_LIGHT = theme.colors.sage[2];
+    const THEME_PRIMARY = theme.colors.blueId[5];
+    const THEME_DARK = theme.colors.blueId[9];
+    const THEME_LIGHT = theme.colors.blueId[2];
 
     const handleImportExcel = () => {
         if (!selectedSchool || !excelFile) {
@@ -93,11 +93,11 @@ const ImportStudents = () => {
                         <Text color="dimmed" size="sm">Bulk enroll students and synchronize profile photos via files.</Text>
                     </Box>
                     <Group>
-                        <Button 
+                        <Button
                             component={Link}
                             to="/export-template"
                             variant="light"
-                            color="sage"
+                            color="blueId"
                             leftSection={<IconDownload size={18} />}
                             radius="md"
                         >
@@ -107,7 +107,7 @@ const ImportStudents = () => {
                 </Flex>
 
                 <Paper p="xl" radius="lg" style={{ border: `1px solid ${THEME_LIGHT}44`, backgroundColor: "#ffffff", maxWidth: '900px' }}>
-                    <Tabs variant="outline" defaultValue="excel" color="sage" styles={{
+                    <Tabs variant="outline" defaultValue="excel" color="blueId" styles={{
                         tab: { fontWeight: 600, fontSize: '13px' },
                         panel: { paddingTop: '24px' }
                     }}>
@@ -121,7 +121,7 @@ const ImportStudents = () => {
                                 <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl">
                                     <Stack gap="md">
                                         {isAdmin ? (
-                                            <Select 
+                                            <Select
                                                 label="Target Institution"
                                                 placeholder="Choose school"
                                                 data={schools.map(s => ({ value: s.id.toString(), label: s.school_name }))}
@@ -143,7 +143,7 @@ const ImportStudents = () => {
                                             />
                                         )}
 
-                                        <FileInput 
+                                        <FileInput
                                             label="Excel File"
                                             placeholder="Upload .xlsx or .csv"
                                             value={excelFile}
@@ -154,11 +154,11 @@ const ImportStudents = () => {
                                             size="md"
                                             styles={{ input: { cursor: 'pointer' } }}
                                         />
-                                        
-                                        <Button 
+
+                                        <Button
                                             onClick={handleImportExcel}
-                                            leftSection={<IconCloudUpload size={18} />}
-                                            style={{ backgroundColor: THEME_PRIMARY }}
+                                            leftSection={<IconCloudUpload size={18} color="white" />}
+                                            style={{ backgroundColor: THEME_PRIMARY, color: 'white' }}
                                             radius="md"
                                             size="md"
                                             loading={importStudentsMutation.isPending}
@@ -174,19 +174,19 @@ const ImportStudents = () => {
                                         <Paper p="md" radius="md" withBorder style={{ backgroundColor: "#fcfdfa" }}>
                                             <Stack gap="xs">
                                                 <Group gap="xs">
-                                                    <ThemeIcon size={18} radius="xl" color="sage" variant="light">
+                                                    <ThemeIcon size={18} radius="xl" color="blueId" variant="light">
                                                         <IconCheck size={12} />
                                                     </ThemeIcon>
                                                     <Text size="xs">Use the exported school template.</Text>
                                                 </Group>
                                                 <Group gap="xs">
-                                                    <ThemeIcon size={18} radius="xl" color="sage" variant="light">
+                                                    <ThemeIcon size={18} radius="xl" color="blueId" variant="light">
                                                         <IconCheck size={12} />
                                                     </ThemeIcon>
                                                     <Text size="xs">Mandatory fields must be filled.</Text>
                                                 </Group>
                                                 <Group gap="xs">
-                                                    <ThemeIcon size={18} radius="xl" color="sage" variant="light">
+                                                    <ThemeIcon size={18} radius="xl" color="blueId" variant="light">
                                                         <IconCheck size={12} />
                                                     </ThemeIcon>
                                                     <Text size="xs">Maximum file size: 10MB.</Text>
@@ -206,7 +206,7 @@ const ImportStudents = () => {
                                 <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl">
                                     <Stack gap="md">
                                         {isAdmin ? (
-                                            <Select 
+                                            <Select
                                                 label="Target Institution"
                                                 placeholder="Choose school"
                                                 data={schools.map(s => ({ value: s.id.toString(), label: s.school_name }))}
@@ -228,7 +228,7 @@ const ImportStudents = () => {
                                             />
                                         )}
 
-                                        <FileInput 
+                                        <FileInput
                                             label="Photo ZIP Archive"
                                             placeholder="Upload .zip file"
                                             value={zipFile}
@@ -240,10 +240,10 @@ const ImportStudents = () => {
                                             styles={{ input: { cursor: 'pointer' } }}
                                         />
 
-                                        <Button 
+                                        <Button
                                             onClick={handleImportPhotos}
-                                            leftSection={<IconCloudUpload size={18} />}
-                                            style={{ backgroundColor: THEME_PRIMARY }}
+                                            leftSection={<IconCloudUpload size={18} color="white" />}
+                                            style={{ backgroundColor: THEME_PRIMARY, color: 'white' }}
                                             radius="md"
                                             size="md"
                                             loading={importPhotosMutation.isPending}
@@ -263,7 +263,7 @@ const ImportStudents = () => {
                                                 Format: <b>name_admission.jpg</b>
                                             </Text>
                                         </Paper>
-                                        <Alert variant="light" color="sage" icon={<IconInfoCircle size={16} />}>
+                                        <Alert variant="light" color="blueId" icon={<IconInfoCircle size={16} />}>
                                             <Text size="xs">Supported formats: .jpg, .jpeg, .png</Text>
                                         </Alert>
                                     </Stack>
