@@ -74,9 +74,14 @@ const Login = () => {
         <Box 
             style={{ 
                 minHeight: "100vh", 
-                backgroundColor: THEME_PRIMARY, 
-                padding: "1.5rem",
+                backgroundColor: theme.colors.blueId[0], 
+                position: "relative",
+                backgroundImage: curvyPatternUrl,
+                backgroundSize: "80px 80px",
+                animation: "curlyDrift 30s linear infinite",
                 display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
                 fontFamily: "Inter, sans-serif"
             }}
         >
@@ -88,187 +93,172 @@ const Login = () => {
                 }
                 `}
             </style>
+            
+            {/* Left Side Branding */}
             <Box 
                 style={{ 
-                    flex: 1,
-                    backgroundColor: theme.colors.blueId[0], 
-                    borderRadius: "24px",
-                    overflow: "hidden",
-                    position: "relative",
-                    backgroundImage: curvyPatternUrl,
-                    backgroundSize: "80px 80px",
-                    animation: "curlyDrift 30s linear infinite",
-                    display: "flex",
-                    flexWrap: "wrap",
-                    alignItems: "center"
+                    flex: "1 1 50%", 
+                    padding: "3rem 6%", 
+                    display: "flex", 
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    minWidth: "320px"
                 }}
             >
-                {/* Left Side Branding */}
-                <Box 
-                    style={{ 
-                        flex: "1 1 50%", 
-                        padding: "3rem 6%", 
-                        display: "flex", 
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        minWidth: "320px"
-                    }}
-                >
-                    <Box mb={40}>
-                        <BlueIDLogo width={300} height={300} />
-                    </Box>
-
-                    <Text 
-                        style={{ 
-                            fontFamily: "Georgia, 'Times New Roman', serif", 
-                            fontSize: "clamp(2.5rem, 4vw, 4.5rem)", 
-                            fontWeight: 400, 
-                            lineHeight: 1.1,
-                            color: THEME_DARK,
-                            marginBottom: "1.5rem"
-                        }}
-                    >
-                        Secure Access,<br />Managed Results.
-                    </Text>
-
-                    <Text 
-                        style={{ 
-                            color: theme.colors.blueId[7], 
-                            fontSize: "0.95rem", 
-                            lineHeight: 1.5,
-                            maxWidth: "400px",
-                            marginBottom: "2.5rem"
-                        }}
-                    >
-                        Advanced student data management for professional educational institutions. Login to access your secure administrative dashboard.
-                    </Text>
-
-                    <Group gap="sm">
-                        <Button 
-                            variant="white" 
-                            radius="xl" 
-                            leftSection={<IconShieldCheck size={16} />}
-                            style={{ 
-                                color: THEME_DARK, 
-                                fontSize: "0.75rem", 
-                                letterSpacing: "1px", 
-                                fontWeight: 700,
-                                padding: "0 1.25rem",
-                                height: "38px",
-                                backgroundColor: "white",
-                                transition: "all 0.2s"
-                            }}
-                        >
-                            SECURE LOGIN
-                        </Button>
-                    </Group>
+                <Box mb={40}>
+                    <BlueIDLogo width={300} height={300} />
                 </Box>
 
-                {/* Right Side Form */}
-                <Box 
+                <Text 
                     style={{ 
-                        flex: "1 1 40%", 
-                        display: "flex", 
-                        justifyContent: "center", 
-                        alignItems: "center",
-                        padding: "2rem",
-                        minWidth: "350px"
+                        fontFamily: "Georgia, 'Times New Roman', serif", 
+                        fontSize: "clamp(2.5rem, 4vw, 4.5rem)", 
+                        fontWeight: 400, 
+                        lineHeight: 1.1,
+                        color: THEME_DARK,
+                        marginBottom: "1.5rem"
                     }}
                 >
-                    <Paper
-                        radius="lg"
-                        p={{ base: 30, sm: 40 }}
-                        style={{
-                            backgroundColor: "#ffffff",
-                            width: "100%",
-                            maxWidth: "420px",
-                            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.05)",
-                            borderRadius: "20px"
+                    Secure Access,<br />Managed Results.
+                </Text>
+
+                <Text 
+                    style={{ 
+                        color: theme.colors.blueId[7], 
+                        fontSize: "0.95rem", 
+                        lineHeight: 1.5,
+                        maxWidth: "400px",
+                        marginBottom: "2.5rem"
+                    }}
+                >
+                    Advanced student data management for professional educational institutions. Login to access your secure administrative dashboard.
+                </Text>
+
+                <Group gap="sm">
+                    <Button 
+                        variant="white" 
+                        radius="xl" 
+                        leftSection={<IconShieldCheck size={16} />}
+                        style={{ 
+                            color: THEME_DARK, 
+                            fontSize: "0.75rem", 
+                            letterSpacing: "1px", 
+                            fontWeight: 700,
+                            padding: "0 1.25rem",
+                            height: "38px",
+                            backgroundColor: "white",
+                            transition: "all 0.2s"
                         }}
                     >
-                        <Text 
-                            style={{ 
-                                fontFamily: "Georgia, 'Times New Roman', serif",
-                                fontSize: "1.75rem",
-                                color: THEME_DARK,
-                                marginBottom: "2rem"
-                            }}
-                        >
-                            Sign in to Portal
-                        </Text>
+                        SECURE LOGIN
+                    </Button>
+                </Group>
+            </Box>
 
-                        <form onSubmit={form.onSubmit(handleLogin)}>
-                            <Stack gap={16}>
-                                <TextInput
-                                    required
-                                    label="Email or Mobile Number"
-                                    placeholder="Enter your email or mobile"
-                                    value={form.values.username}
-                                    onChange={(event) => form.setFieldValue("username", event.currentTarget.value)}
-                                    error={form.errors.username}
-                                    styles={inputStyles}
-                                />
+            {/* Right Side Form */}
+            <Box 
+                style={{ 
+                    flex: "1 1 40%", 
+                    display: "flex", 
+                    justifyContent: "center", 
+                    alignItems: "center",
+                    padding: "2rem",
+                    minWidth: "350px"
+                }}
+            >
+                <Paper
+                    radius="lg"
+                    p={{ base: 30, sm: 40 }}
+                    style={{
+                        backgroundColor: "#ffffff",
+                        width: "100%",
+                        maxWidth: "420px",
+                        boxShadow: "0 20px 40px rgba(0, 0, 0, 0.05)",
+                        borderRadius: "20px"
+                    }}
+                >
+                    <Text 
+                        style={{ 
+                            fontFamily: "Georgia, 'Times New Roman', serif",
+                            fontSize: "1.75rem",
+                            color: THEME_DARK,
+                            marginBottom: "2rem"
+                        }}
+                    >
+                        Sign in to Portal
+                    </Text>
 
-                                <PasswordInput
-                                    required
-                                    label="Password"
-                                    placeholder="••••••••••••"
-                                    value={form.values.password}
-                                    onChange={(event) => form.setFieldValue("password", event.currentTarget.value)}
-                                    error={form.errors.password}
-                                    visibilityToggleIcon={VisibilityToggleIcon}
-                                    styles={inputStyles}
-                                />
+                    <form onSubmit={form.onSubmit(handleLogin)}>
+                        <Stack gap={16}>
+                            <TextInput
+                                required
+                                label="Email or Mobile Number"
+                                placeholder="Enter your email or mobile"
+                                value={form.values.username}
+                                onChange={(event) => form.setFieldValue("username", event.currentTarget.value)}
+                                error={form.errors.username}
+                                styles={inputStyles}
+                            />
 
-                                <Checkbox
-                                    label="Remember me"
-                                    checked={form.values.remember}
-                                    onChange={(event) => form.setFieldValue("remember", event.currentTarget.checked)}
-                                    styles={{
-                                        label: { color: theme.colors.blueId[7], fontSize: "0.85rem" },
-                                        input: { borderColor: theme.colors.blueId[3], backgroundColor: "transparent" }
-                                    }}
-                                    mt={4}
-                                    mb={12}
-                                />
+                            <PasswordInput
+                                required
+                                label="Password"
+                                placeholder="••••••••••••"
+                                value={form.values.password}
+                                onChange={(event) => form.setFieldValue("password", event.currentTarget.value)}
+                                error={form.errors.password}
+                                visibilityToggleIcon={VisibilityToggleIcon}
+                                styles={inputStyles}
+                            />
 
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    disabled={loginResponse.isPending || loginResponse.isLoading}
-                                    loading={loginResponse.isPending || loginResponse.isLoading}
+                            <Checkbox
+                                label="Remember me"
+                                checked={form.values.remember}
+                                onChange={(event) => form.setFieldValue("remember", event.currentTarget.checked)}
+                                styles={{
+                                    label: { color: theme.colors.blueId[7], fontSize: "0.85rem" },
+                                    input: { borderColor: theme.colors.blueId[3], backgroundColor: "transparent" }
+                                }}
+                                mt={4}
+                                mb={12}
+                            />
+
+                            <Button
+                                type="submit"
+                                fullWidth
+                                disabled={loginResponse.isPending || loginResponse.isLoading}
+                                loading={loginResponse.isPending || loginResponse.isLoading}
+                                style={{
+                                    height: "44px",
+                                    backgroundColor: THEME_PRIMARY, 
+                                    color: "white",
+                                    fontSize: "0.8rem",
+                                    fontWeight: 700,
+                                    letterSpacing: "1px",
+                                    borderRadius: "6px",
+                                    transition: "background-color 0.2s"
+                                }}
+                            >
+                                LOG IN
+                            </Button>
+
+                            <Box mt="md" ta="center">
+                                <Link
+                                    to="/auth/forgot-password"
                                     style={{
-                                        height: "44px",
-                                        backgroundColor: THEME_PRIMARY, 
-                                        color: "white",
-                                        fontSize: "0.8rem",
+                                        color: THEME_DARK,
+                                        fontSize: "0.75rem",
                                         fontWeight: 700,
-                                        letterSpacing: "1px",
-                                        borderRadius: "6px",
-                                        transition: "background-color 0.2s"
+                                        letterSpacing: "0.5px",
+                                        textDecoration: "none",
                                     }}
                                 >
-                                    LOG IN
-                                </Button>
-
-                                <Box mt="md" ta="center">
-                                    <Link
-                                        to="/auth/forgot-password"
-                                        style={{
-                                            color: THEME_DARK,
-                                            fontSize: "0.75rem",
-                                            fontWeight: 700,
-                                            letterSpacing: "0.5px",
-                                            textDecoration: "none",
-                                        }}
-                                    >
-                                        FORGOT YOUR PASSWORD?
-                                    </Link>
-                                </Box>
-                            </Stack>
-                        </form>
-                    </Paper>
-                </Box>
+                                    FORGOT YOUR PASSWORD?
+                                </Link>
+                            </Box>
+                        </Stack>
+                    </form>
+                </Paper>
             </Box>
         </Box>
     );
